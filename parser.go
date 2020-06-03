@@ -1,10 +1,11 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
+	"sync"
 )
 
 func main() {
@@ -13,17 +14,40 @@ func main() {
 
 	for i := 1; i <= 50; i++ {
 		tmp := fmt.Sprintf(url, i)
-		// urls = append(urls, tmp)
 		urls[i-1] = tmp
-		fmt.Println(tmp)
 	}
 
-	fmt.Println(urls)
-	var result map[string]interface{}
+	var wg sync.WaitGroup
 
-	resp, _ := http.Get("https://api.ipify.org/?format=json")
-	a, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println(a)
-	json.Unmarshal(a, &result)
+	for counter, url := range urls {
+		wg.Add(1)
+		go request(url, wg, counter)
+		counter++
+	}
+
+	wg.Wait()
+	fmt.Println("Я все")
+}
+
+func request(url string, wg sync.WaitGroup, number int) {
+	defer wg.Done()
+	resp, _ := http.Get(url)
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	var stringify string = string(body)
+	go writeToFile(stringify, number)
+	result := fmt.Sprintf("Done %s", url)
 	fmt.Println(result)
+}
+
+func writeToFile(data string, number int) {
+	filename := fmt.Sprintf("page%d.html", number)
+	outFile, _ := os.Create(filename)
+
+	toWrite := []byte(data)
+	outFile.Write(toWrite)
+}
+
+func read_from_file() {
+	ioutil.ReadFile("site_list.txt")
 }
