@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"sync"
+	"time"
 )
 
 func main() {
@@ -25,7 +26,8 @@ func main() {
 		counter++
 	}
 
-	wg.Wait()
+	// wg.Wait()
+	time.Sleep(time.Second * 2)
 	fmt.Println("Я все")
 }
 
@@ -43,6 +45,7 @@ func request(url string, wg sync.WaitGroup, number int) {
 func writeToFile(data string, number int) {
 	filename := fmt.Sprintf("page%d.html", number)
 	outFile, _ := os.Create(filename)
+	defer outFile.Close()
 
 	toWrite := []byte(data)
 	outFile.Write(toWrite)
