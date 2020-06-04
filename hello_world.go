@@ -13,17 +13,17 @@ func multiply(a int, c int) (result int, comment string) {
 }
 
 func main() {
-	// sum, _ := multiply(3, 4)
-	// fmt.Println(sum)
-	// array_testing()
-	// pointer, pointer2 := memory_testing()
-	// fmt.Println(pointer, *pointer2)
-	// lambda_function()
+	sum, _ := multiply(3, 4)
+	fmt.Println(sum)
+	array_testing()
+	pointer, pointer2 := memory_testing()
+	fmt.Println(pointer, *pointer2)
+	lambda_function()
 
-	// structure_testing()
-	// args_testing(1, "asd")
-	// concurency_testing()
-	// webProgramming_testing()
+	structure_testing()
+	args_testing(1, "asd")
+	concurency_testing()
+	webProgramming_testing()
 	random()
 }
 
