@@ -13,8 +13,8 @@ import (
 func main() {
 	var dataFromFile []string = read_from_file("site_list.txt")
 	fmt.Println(len(dataFromFile))
-	// var urls [50]string = generate_urls()
-	// parse(dataFromFile)
+	var urls [50]string = generate_urls()
+	parse(dataFromFile)
 }
 
 func request(url string, wg sync.WaitGroup, number int) {
