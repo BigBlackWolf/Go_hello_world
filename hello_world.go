@@ -2,42 +2,45 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"io/ioutil"
+	"math/rand"
+	"net/http"
+	"time"
 )
 
 func multiply(a int, c int) (result int, comment string) {
-	return a*c, "hello"
+	return a * c, "hello"
 }
 
 func main() {
-	sum, _ := multiply(3, 4)
-	fmt.Println(sum)
-	array_testing()
-	pointer, pointer2 := memory_testing()
-	fmt.Println(pointer, *pointer2)
-	lambda_function()
+	// sum, _ := multiply(3, 4)
+	// fmt.Println(sum)
+	// array_testing()
+	// pointer, pointer2 := memory_testing()
+	// fmt.Println(pointer, *pointer2)
+	// lambda_function()
 
-	structure_testing()
-	args_testing(1, "asd")
-	concurency_testing()
-	webProgramming_testing()
+	// structure_testing()
+	// args_testing(1, "asd")
+	// concurency_testing()
+	// webProgramming_testing()
+	random()
 }
 
-func array_testing(){
-	var first [5]string // just define -> array
+func array_testing() {
+	var first [5]string      // just define -> array
 	second := []int{1, 2, 3} // initialize -> slice (not fixed size)
 
 	second = append(second, 200)
 	second = append(second, []int{400, 500}...)
-	second[len(second) - 1] = 100
-	
+	second[len(second)-1] = 100
+
 	fmt.Println(first)
 	fmt.Println(second)
 }
 
 func memory_testing() (p, q *int) {
-	p = new(int) // allocate memory
+	p = new(int)         // allocate memory
 	s := make([]int, 10) // allocate memory -> array
 	s[3] = -1
 	r := 1
@@ -46,20 +49,20 @@ func memory_testing() (p, q *int) {
 
 func dictionary_testing() map[string]int {
 	dict := map[string]int{"three": 3, "one": 1}
-	dict["second"] = 2 
+	dict["second"] = 2
 	return dict
 }
 
 func lambda_function() {
-	fmt.Println("Add two numbers: (2 + 7) * 2 = ", 
-		func(a, b int) int { 
+	fmt.Println("Add two numbers: (2 + 7) * 2 = ",
+		func(a, b int) int {
 			return (a + b) * 2
 		}(2, 7))
 }
 
 type Node struct {
 	value int
-	next *Node
+	next  *Node
 }
 
 type LinkedList interface {
@@ -78,7 +81,7 @@ func structure_testing() {
 	fmt.Println(a.next)
 }
 
-func args_testing(args ...interface{}){
+func args_testing(args ...interface{}) {
 	for _, param := range args {
 		fmt.Println("param: ", param)
 	}
@@ -126,7 +129,7 @@ func test() {
 	var a int = 1
 	var b string = "1q3ew"
 	c := "test"
-	fmt.Println(a, b, c) 
+	fmt.Println(a, b, c)
 
 	i := 1
 	for i <= 3 {
@@ -136,13 +139,13 @@ func test() {
 			break
 		}
 	}
-	
-	for j := -2; j <= 0; j++{
+
+	for j := -2; j <= 0; j++ {
 		fmt.Println("j: ", j)
 	}
 
 	if num := 10; c == "tes" {
-		a = 5	
+		a = 5
 	} else if num < 0 {
 		c = "s"
 	} else {
@@ -150,15 +153,15 @@ func test() {
 	}
 
 	switch a {
-		case 0:
-			fmt.Println("Zero")
-		case 2, 1:
-			fmt.Println("One or two")
-		default:
-			fmt.Println("Non of them")
+	case 0:
+		fmt.Println("Zero")
+	case 2, 1:
+		fmt.Println("One or two")
+	default:
+		fmt.Println("Non of them")
 	}
-	
-	var array[5] int
+
+	var array [5]int
 	array[2] = 1
 	array2 := [2]string{"cyber", "punk"}
 	fmt.Println("array 2:", array2)
@@ -166,4 +169,10 @@ func test() {
 	array_copy := array
 	array_copy[0] = 123
 	fmt.Println(array[0] == array_copy[0])
+}
+
+func random() {
+	rand.Seed(time.Now().UnixNano())
+	number := rand.Intn(100)
+	fmt.Println(number)
 }
