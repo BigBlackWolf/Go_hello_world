@@ -13,18 +13,19 @@ func multiply(a int, c int) (result int, comment string) {
 }
 
 func main() {
-	sum, _ := multiply(3, 4)
-	fmt.Println(sum)
-	array_testing()
-	pointer, pointer2 := memory_testing()
-	fmt.Println(pointer, *pointer2)
-	lambda_function()
+	// sum, _ := multiply(3, 4)
+	// fmt.Println(sum)
+	// array_testing()
+	// pointer, pointer2 := memory_testing()
+	// fmt.Println(pointer, *pointer2)
+	// lambda_function()
 
-	structure_testing()
-	args_testing(1, "asd")
+	// structure_testing()
+	// args_testing(1, "asd")
+	// dictionary_testing()
 	concurency_testing()
-	webProgramming_testing()
-	random()
+	// webProgramming_testing()
+	// random()
 }
 
 func array_testing() {
@@ -37,6 +38,12 @@ func array_testing() {
 
 	fmt.Println(first)
 	fmt.Println(second)
+
+	third := second[0:2]
+	test := make([]int, len(second))
+	copy(test, second)
+	third[1] = 100
+	fmt.Println(second, test)
 }
 
 func memory_testing() (p, q *int) {
@@ -50,6 +57,11 @@ func memory_testing() (p, q *int) {
 func dictionary_testing() map[string]int {
 	dict := map[string]int{"three": 3, "one": 1}
 	dict["second"] = 2
+	fmt.Println(dict)
+	empty := make(map[string]struct{})
+	fmt.Println(empty)
+	empty["test"] = struct{}{}
+	fmt.Println(empty)
 	return dict
 }
 
@@ -92,12 +104,22 @@ func inc(i int, c chan int) {
 }
 
 func concurency_testing() {
-	c := make(chan int)
-	go inc(0, c)
-	go inc(10, c)
-	go inc(-805, c)
+	var c chan int
+	c = make(chan int, 10)
+	for i := 0; i < 10; i++ {
+		go inc(i, c)
+	}
 
-	fmt.Println(<-c, <-c, <-c)
+	for i := range c {
+		t := time.NewTimer(time.Second)
+		select {
+		case <-c:
+			fmt.Println(i, <-c)
+		case <-t.C:
+			fmt.Println("Timeout")
+			break
+		}
+	}
 }
 
 type pair struct {
